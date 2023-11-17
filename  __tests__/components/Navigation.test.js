@@ -1,8 +1,8 @@
 import React from "react";
-import { render } from "@testing-library/react-native";
+import { render, fireEvent, act, waitFor } from "@testing-library/react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "../../screens/Home";
+import Home from "../../screens/Home/Home";
 import Navigation from "../../components/Navigation";
 
 // Mock the useNavigation hook
@@ -18,16 +18,27 @@ describe("<Navigation />", () => {
     render(<Navigation />);
   });
 
-  it("navigates to Home screen", () => {
-    const { getByText } = render(<Navigation />);
+  it("handles user account button press", async () => {
+    const logSpy = jest.spyOn(console, "log");
 
-    // Find the element that triggers the navigation (you might need to adjust this based on your actual UI)
-    // const navigateButton = getByText("Navigate to Home");
+    const { getByTestId } = render(<Navigation />);
 
-    // Simulate a button click or other interaction that triggers navigation
-    // fireEvent.press(navigateButton);
+    await act(async () => {
+      const userAccountButton = getByTestId("user-account-button");
+      fireEvent.press(userAccountButton);
+    });
 
-    // Verify that the navigate function was called with the correct screen name
-    // expect(useNavigation().navigate).toHaveBeenCalledWith("Home");
+    await waitFor(() => {
+      expect(logSpy).toHaveBeenCalledWith("hi");
+    });
+
+    //expect(logSpy).toHaveBeenCalledWith("hi");
+
+    // Clean up the mock
+    logSpy.mockRestore();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 });
