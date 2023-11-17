@@ -1,7 +1,10 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 
-import Home from "../screens/Home";
+import CustomLogoHeader from "./CustomLogoHeader";
+import HomePage from "./HomePage";
+import UserAccountButton from "./UserAccountButton";
+import * as Colors from "../constants/colors";
 
 const Stack = createNativeStackNavigator();
 
@@ -10,18 +13,19 @@ const Navigation = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
+          headerTitle: () => <CustomLogoHeader />,
+          headerTitleAlign: "center",
           headerStyle: {
-            backgroundColor: "#222222",
+            backgroundColor: Colors.headerBackgroundColor,
           },
-          headerTintColor: "#fff",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
+          headerTintColor: Colors.headerTintColor,
+          headerTitleStyle: Colors.headerTitleStyle,
+          headerRight: () => <UserAccountButton />,
         }}
       >
         <Stack.Screen
           name="Home"
-          component={Home}
+          component={HomePage}
           options={{ title: "Main Page" }}
         />
       </Stack.Navigator>
