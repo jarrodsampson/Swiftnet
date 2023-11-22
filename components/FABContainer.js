@@ -14,7 +14,7 @@ const FABContainer = () => {
         size="large"
         color={Colors.headerBackgroundColor}
         placement="right"
-        onPress={fabPress}
+        // onPress={fabPress}
         icon={{ name: "forum", color: Colors.inactiveTintColor }}
       />
     </View>
